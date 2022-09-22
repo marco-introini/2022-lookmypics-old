@@ -1,6 +1,6 @@
 # Photo Acceptance Tool
 
-This program is aimed to photographers who need to share thei images to client for acceptance.
+This program is aimed to photographers who need to share their images to client for acceptance.
 
 # Usage
 
