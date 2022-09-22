@@ -24,11 +24,9 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome')->name('home');
 
 Route::middleware('guest')->group(function () {
-    Route::get('login', Login::class)
+    Route::get('user-login', Login::class)
         ->name('login');
 
-    Route::get('register', Register::class)
-        ->name('register');
 });
 
 Route::get('password/reset', Email::class)
