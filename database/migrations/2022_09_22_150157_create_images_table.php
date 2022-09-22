@@ -12,6 +12,8 @@ return new class extends Migration {
 
             $table->string('name');
             $table->text('description')->nullable();
+            $table->string('image');
+            $table->string('image_file_name');
             $table->foreignId('album_id');
             $table->foreign('album_id')->on('albums')->references('id')->cascadeOnDelete();
 

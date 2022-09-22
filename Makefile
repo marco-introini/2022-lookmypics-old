@@ -1,16 +1,13 @@
 .DEFAULT_GOAL := check
 
 check:
-	clear
 	./vendor/bin/phpstan analyse app
 	./vendor/bin/pint --test
 
 test:
-	clear
 	./vendor/bin/pest
 
 production:
-	clear
 	composer install --prefer-dist --optimize-autoloader
 	php artisan migrate
 	npm install
@@ -23,9 +20,9 @@ first_production: production
 	chmod -R 777 storage bootstrap/cache
 
 clear_all: clear
-	clear
 	rm -f .idea/httpRequests/*
 	rm -f storage/backup/*
+	rm -f storage/app/livewire-tmp/*
 
 clear:
 	php artisan route:clear
@@ -51,10 +48,9 @@ update:
 backup:
 	php artisan backup:run
 
-recreate:
-	clear
+recreate: clear_all
+	rm -f storage/app/public/images/*
 	php artisan migrate:fresh --seed
 
 format_code:
-	clear
 	./vendor/bin/pint

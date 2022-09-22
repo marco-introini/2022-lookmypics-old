@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AlbumResource\Pages;
 //use App\Filament\Resources\AlbumResource\RelationManagers;
+use App\Filament\Resources\AlbumResource\RelationManagers\ImagesRelationManager;
 use App\Models\Album;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -43,11 +44,7 @@ class AlbumResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('description'),
-
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('images_count')->counts('images')->label('Images')
             ])
             ->filters([
                 //
@@ -59,11 +56,11 @@ class AlbumResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
-            //
+            ImagesRelationManager::class,
         ];
     }
     
