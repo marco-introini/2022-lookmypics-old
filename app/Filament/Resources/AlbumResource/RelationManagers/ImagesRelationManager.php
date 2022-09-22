@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\AlbumResource\RelationManagers;
 
+use App\Enums\AcceptanceStatus;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -42,9 +44,22 @@ class ImagesRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\BadgeColumn::make('accepted')
+                    ->colors([
+                        'danger' => static fn ($state): bool => $state === AcceptanceStatus::REJECTED->value,
+                        'secondary' => static fn ($state): bool => $state === AcceptanceStatus::NOT_DEFINED->value,
+                        'success' => static fn ($state): bool => $state === AcceptanceStatus::ACCEPTED->value,
+                    ]),
             ])
             ->filters([
-                //
+                Filter::make('not_defined')
+                    ->query(fn (Builder $query): Builder => $query->where('accepted', 'like',AcceptanceStatus::NOT_DEFINED->value))
+                    ->label('To Be Defined')
+                    ->toggle(),
+                Filter::make('accepted')
+                    ->query(fn (Builder $query): Builder => $query->where('accepted', 'like',AcceptanceStatus::ACCEPTED->value))
+                    ->label('Accepted')
+                    ->toggle(),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
