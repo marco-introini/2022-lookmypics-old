@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\AlbumResource\RelationManagers;
 
 use App\Enums\AcceptanceStatus;
+use App\Jobs\MultiUploadAlbumJob;
 use App\Models\Album;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -47,18 +48,30 @@ class ImagesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\BadgeColumn::make('accepted')
                     ->colors([
-                        'danger' => static fn ($state): bool => $state === AcceptanceStatus::REJECTED->value,
-                        'secondary' => static fn ($state): bool => $state === AcceptanceStatus::NOT_DEFINED->value,
-                        'success' => static fn ($state): bool => $state === AcceptanceStatus::ACCEPTED->value,
+                        'danger' => static fn($state): bool => $state === AcceptanceStatus::REJECTED->value,
+                        'secondary' => static fn($state): bool => $state === AcceptanceStatus::NOT_DEFINED->value,
+                        'success' => static fn($state): bool => $state === AcceptanceStatus::ACCEPTED->value,
                     ]),
             ])
             ->filters([
                 Filter::make('not_defined')
-                    ->query(fn (Builder $query): Builder => $query->where('accepted', 'like',AcceptanceStatus::NOT_DEFINED->value))
+                    ->query(
+                        fn(Builder $query): Builder => $query->where(
+                            'accepted',
+                            'like',
+                            AcceptanceStatus::NOT_DEFINED->value
+                        )
+                    )
                     ->label('To Be Defined')
                     ->toggle(),
                 Filter::make('accepted')
-                    ->query(fn (Builder $query): Builder => $query->where('accepted', 'like',AcceptanceStatus::ACCEPTED->value))
+                    ->query(
+                        fn(Builder $query): Builder => $query->where(
+                            'accepted',
+                            'like',
+                            AcceptanceStatus::ACCEPTED->value
+                        )
+                    )
                     ->label('Accepted')
                     ->toggle(),
             ])
@@ -71,8 +84,10 @@ class ImagesRelationManager extends RelationManager
                     ->modalHeading('Multi Upload')
                     ->modalSubheading('This will add any image in /upload into this album.')
                     ->modalButton('Yes, add them')
-                    ->action(fn ($livewire): string => route('albums.import',['album' => $livewire->ownerRecord]))
-                    //->modalContent(fn ($livewire): string => route('albums.import',['album' => $livewire->ownerRecord]))
+                    ->action(function ($livewire) {
+                        MultiUploadAlbumJob::dispatch($livewire->ownerRecord);
+                    })
+                //->modalContent(fn ($livewire): string => route('albums.import',['album' => $livewire->ownerRecord]))
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -81,5 +96,5 @@ class ImagesRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }    
+    }
 }

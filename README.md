@@ -18,6 +18,15 @@ This program is aimed to photographers who need to share their images to client 
 - run migration: `php artisan migrate --seed`
 - login to /admin with email admin@mintdev.me and password 'password'
 
+# Bulk Upload
+
+You can add multiple images in a single album. This features uses jobs to automatically insert them into album.
+
+To use this feature:
+
+- using a ftp client put your jpegs on upload directory under storage/app
+- inside the Album administration use the Multi Upload button
+
 # License
 
 This software is free to use under the MIT License
