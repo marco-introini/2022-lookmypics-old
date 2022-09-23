@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\AlbumResource\RelationManagers;
 
 use App\Enums\AcceptanceStatus;
+use App\Models\Album;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -63,6 +64,15 @@ class ImagesRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
+                Tables\Actions\Action::make('multi_upload')
+                    ->label('Multi Upload')
+                    ->button()
+                    ->requiresConfirmation()
+                    ->modalHeading('Multi Upload')
+                    ->modalSubheading('This will add any image in /upload into this album.')
+                    ->modalButton('Yes, add them')
+                    ->action(fn ($livewire): string => route('albums.import',['album' => $livewire->ownerRecord]))
+                    //->modalContent(fn ($livewire): string => route('albums.import',['album' => $livewire->ownerRecord]))
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
