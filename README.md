@@ -27,6 +27,10 @@ To use this feature:
 - using a ftp client put your jpegs on upload directory under storage/app
 - inside the Album administration use the Multi Upload button
 
+# Utility Routes
+
+- log: /log-viewer (under auth middleware)
+
 # License
 
 This software is free to use under the MIT License
