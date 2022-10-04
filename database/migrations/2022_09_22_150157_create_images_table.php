@@ -16,8 +16,10 @@ return new class extends Migration {
             $table->string('image');
             $table->string('image_file_name');
             $table->string('accepted')->default(AcceptanceStatus::NOT_DEFINED->value);
-            $table->foreignId('album_id');
-            $table->foreign('album_id')->on('albums')->references('id')->cascadeOnDelete();
+            // create an album_id
+            $table->foreignIdFor(\App\Models\Album::class);
+            //$table->foreignId('album_id');
+            //$table->foreign('album_id')->on('albums')->references('id')->cascadeOnDelete();
 
             $table->timestamps();
         });
