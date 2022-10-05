@@ -6,7 +6,7 @@
             <x-logo class="w-auto h-16 mx-auto text-indigo-600" />
         </a>
 
-        <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 leading-9">
+        <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 leading-9 dark:text-gray-200">
             Sign in to your account
         </h2>
         @if (Route::has('register'))
@@ -19,11 +19,11 @@
         @endif
     </div>
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md dark:bg-gray-800">
+        <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10 dark:bg-gray-800">
             <form wire:submit.prevent="authenticate">
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 leading-5">
+                    <label for="email" class="block text-sm font-medium text-gray-700 leading-5 dark:text-gray-200">
                         Email address
                     </label>
 
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="mt-6">
-                    <label for="password" class="block text-sm font-medium text-gray-700 leading-5">
+                    <label for="password" class="block text-sm font-medium text-gray-700 leading-5 dark:text-gray-200">
                         Password
                     </label>
 
@@ -53,13 +53,13 @@
                 <div class="flex items-center justify-between mt-6">
                     <div class="flex items-center">
                         <input wire:model.lazy="remember" id="remember" type="checkbox" class="form-checkbox w-4 h-4 text-indigo-600 transition duration-150 ease-in-out" />
-                        <label for="remember" class="block ml-2 text-sm text-gray-900 leading-5">
+                        <label for="remember" class="block ml-2 text-sm text-gray-900 leading-5 dark:text-gray-200">
                             Remember
                         </label>
                     </div>
 
                     <div class="text-sm leading-5">
-                        <a href="{{ route('password.request') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                        <a href="{{ route('password.request') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 dark:text-gray-200">
                             Forgot your password?
                         </a>
                     </div>
