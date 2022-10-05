@@ -2,4 +2,6 @@
 
 @section('content')
 
+    @livewire('image-acceptance')
+
 @endsection
