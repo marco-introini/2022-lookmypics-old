@@ -2,6 +2,6 @@
 
 @section('content')
 
-    @livewire('image-acceptance')
+    @livewire('image-acceptance',['album' => $album])
 
 @endsection
