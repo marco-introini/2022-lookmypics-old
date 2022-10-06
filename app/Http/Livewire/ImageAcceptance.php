@@ -28,14 +28,30 @@ class ImageAcceptance extends Component
         }
 
         // there are no more images to select
-        $count = Image::where('album_id','=',$this->album->id)
+        if (Image::where('album_id','=',$this->album->id)
             ->where('accepted','LIKE',AcceptanceStatus::NOT_DEFINED->value)
-            ->count();
-
-        if ($count===0) {
+            ->count() === 0)
+        {
             return view('livewire.image-acceptance-no-images');
         }
 
+        $this->image = Image::where('album_id','=',$this->album->id)
+            ->where('accepted','LIKE',AcceptanceStatus::NOT_DEFINED->value)
+            ->first();
+
         return view('livewire.image-acceptance');
     }
+
+    public function accept()
+    {
+        $this->image->accepted = AcceptanceStatus::ACCEPTED->value;
+        $this->image->save();
+    }
+
+    public function reject()
+    {
+        $this->image->accepted = AcceptanceStatus::REJECTED->value;
+        $this->image->save();
+    }
+
 }
