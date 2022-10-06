@@ -28,7 +28,7 @@ class Image extends Model
     {
         $url = $this->image;
         if (! stristr($url, 'https')) {
-            $url = env('APP_URL').'/storage/'.$this->image;
+            $url = config('photoacceptance.base_url').'/storage/'.$this->image;
         }
 
         return $url;
