@@ -37,6 +37,7 @@ update:
 	php artisan --version
 	@echo "\nUpdating..."
 	composer update
+	npm update
 	php artisan config:clear
 	php artisan route:clear
 	php artisan view:clear
