@@ -15,7 +15,7 @@
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.10",
         "opcodesio/log-viewer": "^1.5",
-        "ryangjchandler/filament-profile": "^0.2.1",
+        "ryangjchandler/filament-profile": "^0.3.0",
         "spatie/laravel-ray": "^1.30"
     },
     "require-dev": {
